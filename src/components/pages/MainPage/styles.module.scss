@@ -1,0 +1,13 @@
+.main {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(124, 139, 228);
+  flex-direction: column;
+  p {
+    padding: 0;
+    margin: 0;
+  }
+}

@@ -1,0 +1,30 @@
+.main {
+  min-width: 200px;
+  background-color: rgb(96, 116, 231);
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 10px;
+  align-items: center;
+  box-shadow: 4px 4px 4px 4px #bebebe1a;
+  border-right: 1px solid black;
+  .option {
+    width: 180px;
+    display: flex;
+    justify-content: center;
+    padding: 5px 0px;
+    border: 1px solid black;
+    color: white;
+    border-radius: 5px;
+    outline: none;
+    text-decoration: none;
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(63, 86, 218);
+    }
+  }
+}
