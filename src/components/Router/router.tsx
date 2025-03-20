@@ -5,6 +5,11 @@ import { AppLayout } from "./AppLayout";
 import { MainPage } from "../pages/MainPage";
 import { AppAuthLayout } from "./AppAuthLayout";
 import { StoragePage } from "../pages/StoragePage";
+import { Forecast } from "../pages/Forecast";
+import { TaskManager } from "../pages/TaskManager";
+import { Stats } from "../pages/Stats";
+import { Login } from "../pages/Login";
+import { Reg } from "../pages/Reg";
 
 export const router = createBrowserRouter([
   {
@@ -12,14 +17,14 @@ export const router = createBrowserRouter([
     element: <AppAuthLayout />,
     errorElement: <ErrorPage />,
     children: [
-      // {
-      //   path: "login",
-      //   element: <LoginPage />,
-      // },
-      // {
-      //   path: "registration",
-      //   element: <RegPage />,
-      // },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "registration",
+        element: <Reg />,
+      },
     ],
   },
   {
@@ -39,6 +44,18 @@ export const router = createBrowserRouter([
           {
             path: "storage",
             element: <StoragePage />,
+          },
+          {
+            path: "forecast",
+            element: <Forecast />,
+          },
+          {
+            path: "taskmanager",
+            element: <TaskManager />,
+          },
+          {
+            path: "stats",
+            element: <Stats />,
           },
         ],
       },
