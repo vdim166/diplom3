@@ -1,0 +1,41 @@
+.main {
+  background-color: var(--main-bg);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .window {
+    width: 80%;
+    height: 80%;
+    background-color: rgb(84, 94, 228);
+    border-radius: 10px;
+    border: 1px solid white;
+    padding-left: 15px;
+    color: white;
+  }
+
+  .buttons {
+    width: 80%;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+
+    align-items: center;
+    .generate {
+      padding: 10px;
+      border-radius: 5px;
+      background-color: rgb(54, 54, 224);
+      color: white;
+      border: 1px solid white;
+
+      font-size: 20px;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.05);
+      }
+    }
+  }
+}

@@ -10,6 +10,7 @@ html {
   align-items: center;
   background-color: var(--main-bg);
   flex-direction: column;
+  gap: 5px;
   p {
     padding: 0;
     margin: 0;
@@ -21,7 +22,7 @@ html {
   }
 
   .welcome {
-    font-size: 28px;
+    font-size: 35px;
   }
 
   .done {
