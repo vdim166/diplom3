@@ -1,50 +1,8 @@
-import { CSSProperties, useState } from "react";
+import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
 import cls from "../styles.module.scss";
 import s from "./styles.module.scss";
+import { Cross } from "../../../icons/Cross";
 
-const Cross = ({ onClick }: { onClick: () => void }) => {
-  return (
-    <svg
-      viewBox="0 0 25 25"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      fill="#000000"
-      width={10}
-      height={10}
-      className={s.cross}
-      onClick={onClick}
-    >
-      <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
-      <g
-        id="SVGRepo_tracerCarrier"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      ></g>
-      <g id="SVGRepo_iconCarrier">
-        <title>cross</title> <desc>Created with Sketch Beta.</desc>{" "}
-        <defs> </defs>{" "}
-        <g
-          id="Page-1"
-          stroke="none"
-          strokeWidth="1"
-          fill="none"
-          fillRule="evenodd"
-        >
-          <g
-            id="Icon-Set-Filled"
-            transform="translate(-469.000000, -1041.000000)"
-            fill="#000000"
-          >
-            <path
-              d="M487.148,1053.48 L492.813,1047.82 C494.376,1046.26 494.376,1043.72 492.813,1042.16 C491.248,1040.59 488.712,1040.59 487.148,1042.16 L481.484,1047.82 L475.82,1042.16 C474.257,1040.59 471.721,1040.59 470.156,1042.16 C468.593,1043.72 468.593,1046.26 470.156,1047.82 L475.82,1053.48 L470.156,1059.15 C468.593,1060.71 468.593,1063.25 470.156,1064.81 C471.721,1066.38 474.257,1066.38 475.82,1064.81 L481.484,1059.15 L487.148,1064.81 C488.712,1066.38 491.248,1066.38 492.813,1064.81 C494.376,1063.25 494.376,1060.71 492.813,1059.15 L487.148,1053.48"
-              id="cross"
-            ></path>
-          </g>
-        </g>
-      </g>
-    </svg>
-  );
-};
 const storeStorage = [
   { name: "Яблоки", count: 42 },
   { name: "Бананы", count: 36 },
@@ -72,13 +30,62 @@ type BlockType = {
   style: CSSProperties;
   onHover?: () => void;
   onLeave?: () => void;
+  setOpenedStorage: () => void;
+  onClose: () => void;
 };
 
-export const Block = ({ style, onHover, onLeave }: BlockType) => {
+function isElementFitsViewport(element: HTMLDivElement) {
+  const rect = element.getBoundingClientRect();
+  const viewportHeight = window.innerHeight;
+  const viewportWidth = window.innerWidth;
+
+  const isOutOfViewportTop = rect.top < 0;
+  const isOutOfViewportBottom = rect.bottom > viewportHeight;
+  const isOutOfViewportLeft = rect.left < 0;
+  const isOutOfViewportRight = rect.right > viewportWidth;
+
+  return {
+    fitsVertically: !isOutOfViewportTop && !isOutOfViewportBottom,
+    fitsHorizontally: !isOutOfViewportLeft && !isOutOfViewportRight,
+    isOutOfViewportTop,
+    isOutOfViewportBottom,
+    isOutOfViewportLeft,
+    isOutOfViewportRight,
+  };
+}
+
+export const Block = ({
+  style,
+  onHover,
+  onLeave,
+  setOpenedStorage,
+  onClose,
+}: BlockType) => {
   const [isClicked, setIsClicked] = useState(false);
+
+  const ref = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    if (isClicked) {
+      const result = isElementFitsViewport(ref.current!);
+
+      if (result.fitsVertically === false) {
+        if (result.isOutOfViewportTop) {
+          if (ref.current) {
+            ref.current.style.top = "120%";
+          }
+        } else if (result.isOutOfViewportBottom) {
+          if (ref.current) {
+            ref.current.style.top = "0%";
+          }
+        }
+      }
+    }
+  }, [isClicked]);
 
   const closeModal = () => {
     setIsClicked(false);
+    onClose();
   };
   return (
     <div className={`${s.main}`}>
@@ -87,13 +94,14 @@ export const Block = ({ style, onHover, onLeave }: BlockType) => {
         style={style}
         onClick={() => {
           setIsClicked((prev) => !prev);
+          setOpenedStorage();
         }}
         onMouseEnter={onHover}
         onMouseLeave={onLeave}
       ></div>
       {isClicked && (
-        <div className={s.modal}>
-          <Cross onClick={closeModal} />
+        <div className={s.modal} ref={ref}>
+          <Cross onClick={closeModal} className={s.cross} />
           <p className={s.text}>На этом складе есть</p>
 
           <div className={s.options}>

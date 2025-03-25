@@ -10,6 +10,7 @@
     top: 10px;
     font-size: 28px;
     color: white;
+    transition: color 0.5s ease;
   }
 
   .line1 {
@@ -41,5 +42,33 @@
       transform: scale(1.05);
       cursor: pointer;
     }
+  }
+}
+
+.glowGreen {
+  color: #4caf50;
+  animation: glow-green 1.5s ease;
+}
+
+.glowRed {
+  color: #f3361d;
+  animation: glow-red 1.5s ease;
+}
+
+@keyframes glow-green {
+  0% {
+    color: #f0f0f0;
+  }
+  100% {
+    color: #34bb39;
+  }
+}
+@keyframes glow-red {
+  0% {
+    color: #f0f0f0;
+  }
+
+  100% {
+    color: #f3361d;
   }
 }

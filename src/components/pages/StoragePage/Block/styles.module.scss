@@ -33,6 +33,17 @@
       gap: 4px;
       max-height: 400px;
       overflow: auto;
+      padding-right: 4px;
+
+      &::-webkit-scrollbar {
+        width: 4px;
+        background: transparent;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--main-bg);
+        border-radius: 4px;
+      }
 
       .option {
         // background-color: blue;
