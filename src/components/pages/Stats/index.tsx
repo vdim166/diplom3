@@ -9,13 +9,17 @@ export const Stats = () => {
     null
   );
 
+  const goBack = () => {
+    setCurrentStat(null);
+  };
+
   return (
     <div className={cls.main}>
       {currentStat === null && (
         <ChooseStatsPage set={(s) => setCurrentStat(s)} />
       )}
 
-      {currentStat === stats.column && <ColumnStat />}
+      {currentStat === stats.column && <ColumnStat goBack={goBack} />}
     </div>
   );
 };

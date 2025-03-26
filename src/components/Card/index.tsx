@@ -1,11 +1,13 @@
 import { CSSProperties } from "react";
 import cls from "./styles.module.scss";
 
-export const Card = ({ style }: { style?: CSSProperties }) => {
-  const taskText = `Купить моркови Купить моркови Купить моркови Купить моркови
-          Купить моркови Купить моркови Купить моркови Купить моркови Купить
-          моркови`;
+interface CardProps {
+  style?: CSSProperties;
+  taskText: string;
+  worker: string;
+}
 
+export const Card = ({ style, taskText, worker }: CardProps) => {
   return (
     <div className={cls.card} style={style}>
       <div className={cls.taskBlock}>
@@ -14,9 +16,8 @@ export const Card = ({ style }: { style?: CSSProperties }) => {
           {taskText.length > 110 && "..."}
         </p>
       </div>
-
       <div>
-        <p className={cls.worker}>Исполнитель: Vasya</p>
+        <p className={cls.worker}>Исполнитель: {worker}</p>
       </div>
     </div>
   );

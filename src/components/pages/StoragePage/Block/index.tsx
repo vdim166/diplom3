@@ -109,8 +109,9 @@ export const Block = ({
               return (
                 <div className={s.option} key={item.name}>
                   <p style={{ whiteSpace: "nowrap", padding: 0, margin: 0 }}>
-                    {item.name} {item.count}
+                    {item.name}
                   </p>
+                  <p style={{ margin: 0 }}>{item.count}</p>
                 </div>
               );
             })}

@@ -1,6 +1,7 @@
 .main {
   height: 100%;
   width: 100%;
+  position: relative;
 
   display: flex;
   justify-content: center;
@@ -16,13 +17,50 @@
     align-items: flex-end;
     gap: 2%;
   }
+
+  .backButton {
+    position: absolute;
+    top: 2%;
+    left: 3%;
+    border: 1px solid white;
+    padding: 2px 7px;
+    border-radius: 3px;
+
+    p {
+      font-size: 20px;
+      color: white;
+      margin: 0;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(200, 210, 243);
+    }
+  }
 }
 
 .graph {
+  position: relative;
   height: 0%;
-  width: 150px;
+  width: 100px;
   background-color: rgb(168, 57, 57);
   transition: height 0.8s ease;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+  border-top: 1px solid white;
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+
+  .name {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    p {
+      margin: 0;
+      color: white;
+      white-space: nowrap;
+    }
+  }
 }

@@ -1,3 +1,4 @@
+import NumberAnimation from "../../NumberAnimation";
 import cls from "./styles.module.scss";
 
 export const MainPage = () => {
@@ -15,8 +16,14 @@ export const MainPage = () => {
         {weekday[0].toUpperCase() + weekday.slice(1)}, {day} {month}
       </p>
       <p className={cls.welcome}>Добрый день, {userName}</p>
-      <p className={cls.done}>Закоченных задач: 0</p>
-      <p className={cls.done}>Количество участников: 0</p>
+      <div className={cls.line}>
+        <p className={cls.done}>Закоченных задач:</p>
+        <NumberAnimation finalNumber={3} duration={2.5} />
+      </div>
+      <div className={cls.line}>
+        <p className={cls.done}>Количество участников:</p>
+        <NumberAnimation finalNumber={2} duration={2.5} />
+      </div>
     </div>
   );
 };

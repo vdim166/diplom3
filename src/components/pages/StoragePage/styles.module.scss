@@ -4,6 +4,8 @@
   display: flex;
   justify-content: space-evenly;
   align-items: center;
+  overflow: hidden;
+  max-height: 100vh;
 
   .name {
     position: absolute;
