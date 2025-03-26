@@ -9,9 +9,13 @@ export const TaskManager = () => {
       </div>
       <div className={cls.kanban}>
         <span className={cls.line}>
-          <div className={cls.lineName}>Hello</div>
+          <div className={cls.lineName}>TODO</div>
           <div className={cls.options}>
-            <Card />
+            <Card
+              style={{
+                marginTop: "20px",
+              }}
+            />
             <Card />
             <Card />
             <Card />
@@ -19,16 +23,25 @@ export const TaskManager = () => {
           </div>
         </span>
         <span className={cls.line}>
-          <div className={cls.lineName}>Hello</div>
+          <div className={cls.lineName}>В прогрессе</div>
           <div className={cls.options}>
-            <Card />
+            <Card
+              style={{
+                marginTop: "20px",
+              }}
+            />
             <Card />
             <Card />
           </div>
         </span>
         <span className={cls.line}>
-          <div className={cls.lineName}>Hello</div>
+          <div className={cls.lineName}>Сделано</div>
           <div className={cls.options}>
+            <Card
+              style={{
+                marginTop: "20px",
+              }}
+            />
             <Card />
             <Card />
             <Card />
@@ -36,8 +49,11 @@ export const TaskManager = () => {
             <Card />
             <Card />
             <Card />
-            <Card />
-            <Card />
+            <Card
+              style={{
+                marginBottom: "22px",
+              }}
+            />
           </div>
         </span>
       </div>

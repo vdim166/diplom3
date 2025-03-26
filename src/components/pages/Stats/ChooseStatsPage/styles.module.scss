@@ -1,0 +1,30 @@
+.main {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  h1 {
+    color: white;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    .option {
+      padding: 5px 0px;
+      width: 350px;
+      color: white;
+      font-size: 25px;
+      border: 1px solid white;
+      border-radius: 10px;
+      text-align: center;
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(62, 62, 180);
+      }
+    }
+  }
+}

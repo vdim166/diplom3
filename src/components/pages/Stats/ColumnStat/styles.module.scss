@@ -1,0 +1,28 @@
+.main {
+  height: 100%;
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .stats {
+    border: 1px solid white;
+    height: 800px;
+    width: 1200px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 2%;
+  }
+}
+
+.graph {
+  height: 0%;
+  width: 150px;
+  background-color: rgb(168, 57, 57);
+  transition: height 0.8s ease;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
