@@ -1,4 +1,4 @@
-import { getRandomColor } from "../../utils";
+import { getRandomColor } from "../../utils/getRandomColor";
 import { Block } from "./Block";
 import cls from "./styles.module.scss";
 import { useMemo, useState } from "react";

@@ -26,4 +26,16 @@
       background-color: rgb(63, 86, 218);
     }
   }
+
+  .userSection {
+    margin-top: auto;
+    margin-bottom: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    color: white;
+  }
 }

@@ -1,7 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import cls from "./styles.module.scss";
+import { useGlobalContext } from "../Contexts/useGlobalContext";
 
 export const Sidebar = () => {
+  const n = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    n("/auth/login");
+  };
+
+  const { name } = useGlobalContext();
   return (
     <div className={cls.main}>
       <Link
@@ -25,6 +33,13 @@ export const Sidebar = () => {
       <Link to={"/stats"} className={cls.option}>
         Статистика
       </Link>
+
+      <div className={cls.userSection}>
+        <div className={cls.userName}>{name}</div>
+        <div className={cls.option} onClick={handleLogout}>
+          Выйти
+        </div>
+      </div>
     </div>
   );
 };

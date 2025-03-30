@@ -4,14 +4,16 @@ import styles from "./styles.module.scss";
 interface NumberAnimationProps {
   finalNumber: number;
   duration?: number;
+  id: string;
 }
 
 const NumberAnimation: React.FC<NumberAnimationProps> = ({
   finalNumber,
   duration = 3,
+  id,
 }) => {
-  const numbers = [finalNumber, ...Array(10).keys()].map((num) => (
-    <span key={num}>
+  const numbers = [finalNumber, ...Array(9).keys()].map((num, index) => (
+    <span key={num + id + index}>
       <p>{num}</p>
     </span>
   ));

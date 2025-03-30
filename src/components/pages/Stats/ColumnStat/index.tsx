@@ -1,6 +1,6 @@
 import { CSSProperties, useEffect, useState } from "react";
 import cls from "./styles.module.scss";
-import { getRandomColor } from "../../../utils";
+import { getRandomColor } from "../../../utils/getRandomColor";
 
 const ColumnStatGraph = ({
   to = 100,
