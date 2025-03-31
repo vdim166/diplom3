@@ -1,3 +1,12 @@
+export type ResponseTask = {
+  assigned_to: string;
+  created_at: string;
+  description: string;
+  id: string;
+  status: string;
+  title: string;
+};
+
 class BackendApi {
   private defaultUrl: string = "http://localhost:8000";
 
@@ -31,6 +40,52 @@ class BackendApi {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ username, password }),
+    });
+
+    return response;
+  }
+
+  async getAllTasks() {
+    const response = await fetch(`${this.defaultUrl}/tasks`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data: {
+      todo: { [key: string]: ResponseTask[] };
+      in_progress: { [key: string]: ResponseTask[] };
+      done: { [key: string]: ResponseTask[] };
+    } = await response.json();
+
+    return data;
+  }
+
+  async createTask(data: {
+    title: string;
+    description: string;
+    assigned_to: string;
+  }) {
+    const response = await fetch(`${this.defaultUrl}/tasks`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    return await response.json();
+  }
+
+  async moveTask(id: string, newStatus: string) {
+    const response = await fetch(`${this.defaultUrl}/tasks/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        status: newStatus,
+      }),
     });
 
     return response;

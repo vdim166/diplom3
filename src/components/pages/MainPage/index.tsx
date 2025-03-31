@@ -9,7 +9,7 @@ export const MainPage = () => {
   const month = now.toLocaleString("ru-RU", { month: "long" });
   const day = now.toLocaleString("ru-RU", { day: "numeric" });
 
-  const { name } = useGlobalContext();
+  const { name, tasks, allUsers } = useGlobalContext();
 
   return (
     <div className={cls.main}>
@@ -19,19 +19,27 @@ export const MainPage = () => {
       <p className={cls.welcome}>Добрый день, {name}</p>
       <div className={cls.line}>
         <p className={cls.done}>Закоченных задач:</p>
-        <NumberAnimation
-          finalNumber={3}
-          duration={2.5}
-          id="makscmdskocmkosdmckods"
-        />
+        {tasks === null ? (
+          <p>Loading</p>
+        ) : (
+          <NumberAnimation
+            finalNumber={tasks.filter((t) => t.status === "done").length}
+            duration={2.5}
+            id="makscmdskocmkosdmckods"
+          />
+        )}
       </div>
       <div className={cls.line}>
         <p className={cls.done}>Количество участников:</p>
-        <NumberAnimation
-          finalNumber={2}
-          duration={2.5}
-          id={"cdkscmskcmksdcjn"}
-        />
+        {allUsers === null ? (
+          <p>Loading</p>
+        ) : (
+          <NumberAnimation
+            finalNumber={allUsers}
+            duration={2.5}
+            id="cdkscmskcmksdcjn"
+          />
+        )}
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import cls from "./styles.module.scss";
+// import { backendApi } from "../../utils/backendApi";
 
 export const Forecast = () => {
   const [text, setText] = useState<string>("");
@@ -14,22 +15,19 @@ export const Forecast = () => {
   const pause = (ms: number = 0) => new Promise((res) => setTimeout(res, ms));
 
   const generateResponse = async () => {
+    // await backendApi.createTask();
     setIsDisabled(true);
-
     for (let i = 0; i < myText.length; ++i) {
       await pause(10);
       const elem = myText[i];
       setText((prev) => prev + elem);
     }
-
     await pause(500);
-
     for (let i = 0; i < myText2.length; ++i) {
       await pause(10);
       const elem = myText2[i];
       setText((prev) => prev + elem);
     }
-
     setIsDisabled(false);
   };
 

@@ -1,33 +1,31 @@
 import { useState } from "react";
 import { Card } from "../../Card";
 import cls from "./styles.module.scss";
+import { useGlobalContext } from "../../Contexts/useGlobalContext";
+import { backendApi } from "../../utils/backendApi";
 
-type Task = {
+export type Task = {
   id: string;
   text: string;
   worker: string;
   status: "todo" | "inProgress" | "done";
 };
 
-export const TaskManager = () => {
-  const [tasks, setTasks] = useState<Task[]>([
-    { id: "1", text: "Купить моркови", worker: "Vasya", status: "todo" },
-    { id: "2", text: "Помыть машину", worker: "Petya", status: "todo" },
-    { id: "3", text: "Сделать домашку", worker: "Masha", status: "todo" },
-    { id: "4", text: "Починить кран", worker: "Vasya", status: "todo" },
-    { id: "5", text: "Купить продукты", worker: "Petya", status: "todo" },
-    { id: "6", text: "Написать код", worker: "Vasya", status: "inProgress" },
-    { id: "7", text: "Протестировать", worker: "Masha", status: "inProgress" },
-    { id: "8", text: "Развернуть", worker: "Petya", status: "inProgress" },
-    { id: "9", text: "Создать дизайн", worker: "Vasya", status: "done" },
-    { id: "10", text: "Согласовать ТЗ", worker: "Masha", status: "done" },
-    { id: "11", text: "Провести митинг", worker: "Petya", status: "done" },
-  ]);
+const convertStatuses = {
+  todo: "todo",
+  inProgress: "in_progress",
+  done: "done",
+};
 
+export const TaskManager = () => {
   const [draggedTask, setDraggedTask] = useState<Task | null>(null);
   const [targetColumn, setTargetColumn] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
+
+  const { tasks, setTasks } = useGlobalContext();
+
+  if (!tasks) return;
 
   const handleDragStart = (e: React.DragEvent, task: Task) => {
     setDraggedTask(task);
@@ -91,7 +89,7 @@ export const TaskManager = () => {
     setTargetColumn(status);
   };
 
-  const handleDrop = (
+  const handleDrop = async (
     e: React.DragEvent,
     status: "todo" | "inProgress" | "done"
   ) => {
@@ -102,6 +100,8 @@ export const TaskManager = () => {
           task.id === draggedTask.id ? { ...task, status } : task
         )
       );
+
+      await backendApi.moveTask(draggedTask.id, convertStatuses[status]);
     }
     setDraggedTask(null);
     setTargetColumn(null);
