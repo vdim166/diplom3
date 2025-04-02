@@ -15,6 +15,7 @@ const ColumnStatGraph = ({
 
   useEffect(() => {
     setHeight(to);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const color = getRandomColor();

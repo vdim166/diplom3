@@ -1,0 +1,15 @@
+.modalBg {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(14, 13, 13, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  .modalContent {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+  }
+}

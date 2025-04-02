@@ -1,6 +1,7 @@
 import { ReactNode, useState } from "react";
 import { GlobalContext, GlobalContextType } from "./GlobalContext";
 import { Task } from "../pages/TaskManager";
+import { MODALS } from "../ModalComponent/types";
 
 export const GlobalContextProvider = ({
   children,
@@ -11,7 +12,11 @@ export const GlobalContextProvider = ({
 
   const [tasks, setTasks] = useState<Task[] | null>(null);
 
-  const [allUsers, setAllUsers] = useState<number | null>(null);
+  const [allUsers, setAllUsers] = useState<string[] | null>(null);
+
+  const [currentOpenModal, setCurrentOpenModal] = useState<
+    keyof typeof MODALS | null
+  >(null);
 
   const state: GlobalContextType = {
     name,
@@ -20,6 +25,8 @@ export const GlobalContextProvider = ({
     setTasks,
     allUsers,
     setAllUsers,
+    currentOpenModal,
+    setCurrentOpenModal,
   };
 
   return (

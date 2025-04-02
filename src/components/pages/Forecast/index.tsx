@@ -1,10 +1,14 @@
 import { useState } from "react";
 import cls from "./styles.module.scss";
+import { useGlobalContext } from "../../Contexts/useGlobalContext";
+import { MODALS } from "../../ModalComponent/types";
 // import { backendApi } from "../../utils/backendApi";
 
 export const Forecast = () => {
   const [text, setText] = useState<string>("");
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
+
+  const { setCurrentOpenModal } = useGlobalContext();
 
   const myText =
     "Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello";
@@ -15,7 +19,8 @@ export const Forecast = () => {
   const pause = (ms: number = 0) => new Promise((res) => setTimeout(res, ms));
 
   const generateResponse = async () => {
-    // await backendApi.createTask();
+    setCurrentOpenModal(MODALS.ADD_TASK);
+
     setIsDisabled(true);
     for (let i = 0; i < myText.length; ++i) {
       await pause(10);

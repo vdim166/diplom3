@@ -1,0 +1,72 @@
+.main {
+  background-color: white;
+  padding: 50px;
+  border-radius: 13px;
+  display: flex;
+  flex-direction: column;
+
+  gap: 35px;
+
+  .wrapperList {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .buttons {
+    display: flex;
+
+    justify-content: space-around;
+    button {
+      padding: 6px 12px;
+      background-color: rgb(255, 255, 255);
+      outline: none;
+      border: 1px solid rgb(55, 55, 177);
+      border-radius: 5px;
+      font-size: 14px;
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(49, 26, 180);
+        color: white;
+      }
+    }
+  }
+}
+
+.wrapper {
+  position: relative;
+  .list {
+    border: 1px solid rgb(76, 76, 204);
+    height: 25px;
+    width: 200px;
+    border-radius: 8px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    .mainTitle {
+      padding: 5px;
+    }
+  }
+  .modal {
+    position: absolute;
+    top: 20px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    min-width: 160px;
+    padding: 5px;
+
+    .option {
+      padding: 5px 10px;
+
+      &:hover {
+        background-color: rgb(100, 100, 218);
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
+  }
+}

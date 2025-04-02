@@ -72,7 +72,7 @@ export const Block = ({
   return (
     <div className={`${s.main}`}>
       <div
-        className={`${cls.block}`}
+        className={`${cls.item}`}
         style={style}
         onClick={() => {
           setIsClicked((prev) => !prev);

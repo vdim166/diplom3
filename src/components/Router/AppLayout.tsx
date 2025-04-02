@@ -3,6 +3,7 @@ import { MainTemplate } from "../MainTemplate";
 import { backendApi } from "../utils/backendApi";
 import { useGlobalContext } from "../Contexts/useGlobalContext";
 import { Task } from "../pages/TaskManager";
+import { ModalComponent } from "../ModalComponent";
 
 export const AppLayout = () => {
   const { setTasks, setAllUsers } = useGlobalContext();
@@ -62,12 +63,18 @@ export const AppLayout = () => {
         }
       }
 
-      setAllUsers(Object.keys(allUsers).length);
+      setAllUsers(Object.keys(allUsers));
       setTasks(result);
     };
 
     getAllTasks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <MainTemplate />;
+  return (
+    <>
+      <ModalComponent />
+      <MainTemplate />
+    </>
+  );
 };

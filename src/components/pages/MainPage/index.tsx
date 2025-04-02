@@ -35,7 +35,7 @@ export const MainPage = () => {
           <p>Loading</p>
         ) : (
           <NumberAnimation
-            finalNumber={allUsers}
+            finalNumber={allUsers.length}
             duration={2.5}
             id="cdkscmskcmksdcjn"
           />
