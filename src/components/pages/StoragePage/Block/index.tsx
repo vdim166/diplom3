@@ -3,35 +3,16 @@ import cls from "../styles.module.scss";
 import s from "./styles.module.scss";
 import { Cross } from "../../../icons/Cross";
 
-const storeStorage = [
-  { name: "Яблоки", count: 42 },
-  { name: "Бананы", count: 36 },
-  { name: "Упаковки молока", count: 15 },
-  { name: "Яйца", count: 72 },
-  { name: "Буханки хлеба", count: 20 },
-  { name: "Куриные грудки", count: 25 },
-  { name: "Мешки картофеля", count: 18 },
-  { name: "Апельсиновый сок", count: 12 },
-  { name: "Коробки хлопьев", count: 30 },
-  { name: "Йогурты", count: 45 },
-  { name: "Сырные головки", count: 22 },
-  { name: "Помидоры", count: 38 },
-  { name: "Лук", count: 50 },
-  { name: "Пачки кофе", count: 28 },
-  { name: "Коробки пасты", count: 40 },
-  { name: "Мешки риса", count: 15 },
-  { name: "Консервированная фасоль", count: 60 },
-  { name: "Замороженная пицца", count: 16 },
-  { name: "Мороженое", count: 24 },
-  { name: "Пачки чипсов", count: 35 },
-];
-
 type BlockType = {
   style: CSSProperties;
   onHover?: () => void;
   onLeave?: () => void;
   setOpenedStorage: () => void;
   onClose: () => void;
+  storage: {
+    name: string;
+    count: number;
+  }[];
 };
 
 function isElementFitsViewport(element: HTMLDivElement) {
@@ -60,6 +41,7 @@ export const Block = ({
   onLeave,
   setOpenedStorage,
   onClose,
+  storage,
 }: BlockType) => {
   const [isClicked, setIsClicked] = useState(false);
 
@@ -105,7 +87,7 @@ export const Block = ({
           <p className={s.text}>На этом складе есть</p>
 
           <div className={s.options}>
-            {storeStorage.map((item) => {
+            {storage.map((item) => {
               return (
                 <div className={s.option} key={item.name}>
                   <p style={{ whiteSpace: "nowrap", padding: 0, margin: 0 }}>

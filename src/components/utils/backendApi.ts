@@ -90,6 +90,17 @@ class BackendApi {
 
     return response;
   }
+
+  async fetchStorage() {
+    const response = await fetch(`${this.defaultUrl}/items`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return await response.json();
+  }
 }
 
 export const backendApi = new BackendApi();

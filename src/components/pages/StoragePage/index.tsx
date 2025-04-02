@@ -1,15 +1,45 @@
+import { backendApi } from "../../utils/backendApi";
 import { getRandomColor } from "../../utils/getRandomColor";
 import { Block } from "./Block";
 import cls from "./styles.module.scss";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+export type StorageType = { [key: string]: { name: string; count: number }[] };
 
 export const StoragePage = () => {
+  const [currentStorage, setCurrentStorage] = useState<StorageType>({});
+
   const colors = useMemo(() => {
     const colors = [];
     for (let i = 0; i < 24; i++) {
       colors.push(getRandomColor());
     }
     return colors;
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result: StorageType = {};
+
+      const data: {
+        category: string;
+        count: number;
+        id: string;
+        name: string;
+        storage_id: string;
+      }[] = await backendApi.fetchStorage();
+
+      data.forEach((item) => {
+        if (!result[item.storage_id]) {
+          result[item.storage_id] = [];
+        }
+
+        result[item.storage_id].push({ name: item.name, count: item.count });
+      });
+
+      setCurrentStorage(result);
+    };
+    fetchData();
   }, []);
 
   const [currentStorageName, setCurrentStorageName] = useState<string | null>(
@@ -51,6 +81,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_1`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("2")}
@@ -60,6 +91,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_2`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("3")}
@@ -69,6 +101,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_3`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("4")}
@@ -78,6 +111,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_4`]}
           ></Block>
         </div>
         <div
@@ -97,6 +131,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_5`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("6")}
@@ -106,6 +141,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_6`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("7")}
@@ -115,6 +151,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_7`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("8")}
@@ -124,6 +161,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_8`]}
           ></Block>
         </div>
         <div
@@ -143,6 +181,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_9`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("10")}
@@ -152,6 +191,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_10`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("11")}
@@ -161,6 +201,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_11`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("12")}
@@ -170,6 +211,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_12`]}
           ></Block>
         </div>
       </div>
@@ -190,6 +232,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_13`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("14")}
@@ -199,6 +242,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_14`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("15")}
@@ -208,6 +252,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_15`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("16")}
@@ -217,6 +262,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_16`]}
           ></Block>
         </div>
         <div
@@ -236,6 +282,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_17`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("18")}
@@ -245,6 +292,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_18`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("19")}
@@ -254,6 +302,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_19`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("20")}
@@ -263,6 +312,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_20`]}
           ></Block>
         </div>
         <div
@@ -282,6 +332,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_21`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("22")}
@@ -291,6 +342,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_22`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("23")}
@@ -300,6 +352,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_23`]}
           ></Block>
           <Block
             setOpenedStorage={() => setOpenedStorage("24")}
@@ -309,6 +362,7 @@ export const StoragePage = () => {
             }}
             onLeave={() => setCurrentStorageName(null)}
             onClose={() => setOpenedStorage(null)}
+            storage={currentStorage[`storage_24`]}
           ></Block>
         </div>
       </div>
