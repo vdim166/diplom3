@@ -4,6 +4,8 @@
   border-radius: 13px;
   display: flex;
   flex-direction: column;
+  max-width: 300px;
+  text-align: center;
 
   gap: 35px;
 
@@ -11,6 +13,9 @@
     width: 100%;
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
 
   .buttons {
@@ -47,6 +52,7 @@
 
     .mainTitle {
       padding: 5px;
+      text-align: start;
     }
   }
   .modal {
@@ -57,6 +63,7 @@
     border-radius: 5px;
     min-width: 160px;
     padding: 5px;
+    text-align: start;
 
     .option {
       padding: 5px 10px;

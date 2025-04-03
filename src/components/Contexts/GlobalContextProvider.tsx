@@ -18,6 +18,8 @@ export const GlobalContextProvider = ({
     keyof typeof MODALS | null
   >(null);
 
+  const [modalData, setModalData] = useState<any>(null);
+
   const state: GlobalContextType = {
     name,
     setName,
@@ -27,6 +29,8 @@ export const GlobalContextProvider = ({
     setAllUsers,
     currentOpenModal,
     setCurrentOpenModal,
+    modalData,
+    setModalData,
   };
 
   return (

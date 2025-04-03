@@ -1,3 +1,5 @@
+import { fetchProductDataApi } from "./fetchProductDataApi";
+
 export type ResponseTask = {
   assigned_to: string;
   created_at: string;
@@ -100,6 +102,28 @@ class BackendApi {
     });
 
     return await response.json();
+  }
+
+  async forecast() {
+    const result = [];
+
+    const data = await fetchProductDataApi.fetch();
+
+    for (let i = 0; i < data.length; ++i) {
+      const requestData = data[i];
+
+      const response = await fetch(`${this.defaultUrl}/predict`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+      });
+
+      const newData: { price: number } = await response.json();
+      result.push(newData);
+    }
+    return { data, result };
   }
 }
 

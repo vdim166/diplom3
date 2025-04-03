@@ -13,6 +13,9 @@ export type GlobalContextType = {
   setCurrentOpenModal: React.Dispatch<
     React.SetStateAction<keyof typeof MODALS | null>
   >;
+
+  modalData: any;
+  setModalData: any;
 };
 
 export const GlobalContext = createContext<GlobalContextType>({
@@ -24,4 +27,6 @@ export const GlobalContext = createContext<GlobalContextType>({
   setAllUsers: () => {},
   currentOpenModal: null,
   setCurrentOpenModal: () => {},
+  modalData: null,
+  setModalData: () => {},
 });

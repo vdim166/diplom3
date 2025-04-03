@@ -42,7 +42,7 @@ const List = ({
 };
 
 export const AddTaskModal = () => {
-  const { setCurrentOpenModal } = useGlobalContext();
+  const { setCurrentOpenModal, modalData, setModalData } = useGlobalContext();
 
   const [pickedUser, setIsPickedUser] = useState<string | null>(null);
   const { setTasks } = useGlobalContext();
@@ -50,6 +50,7 @@ export const AddTaskModal = () => {
 
   const closeModal = () => {
     setCurrentOpenModal(MODALS.NOTHING);
+    setModalData(null);
   };
 
   const handleYes = async () => {
@@ -59,8 +60,8 @@ export const AddTaskModal = () => {
 
     if (pickedUser !== null) {
       const data = await backendApi.createTask({
-        title: "test1",
-        description: "test2",
+        title: `Необходимо закупить ${modalData}`,
+        description: "",
         assigned_to: pickedUser,
       });
 
@@ -83,14 +84,15 @@ export const AddTaskModal = () => {
 
   return (
     <div className={cls.main}>
-      <p>Нужно добавить задачу в менеджер задач?</p>
+      <p>Нужно добавить задачу в менеджер задач для покупки {modalData}?</p>
       {showUsers && (
         <div className={cls.wrapperList}>
+          <p>Выберите пользователя</p>
           <List pickedUser={pickedUser} setIsPickedUser={setIsPickedUser} />
         </div>
       )}
       <div className={cls.buttons}>
-        <button onClick={handleYes}>Да</button>{" "}
+        <button onClick={handleYes}>{pickedUser ? "Подтвердить" : "Да"}</button>
         <button onClick={closeModal}>Нет</button>
       </div>
     </div>
