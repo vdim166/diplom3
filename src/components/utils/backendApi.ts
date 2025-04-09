@@ -125,6 +125,19 @@ class BackendApi {
     }
     return { data, result };
   }
+
+  async getAllUsers(token: string) {
+    const response = await fetch(`${this.defaultUrl}/users`, {
+      method: "GET",
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    const data = await response.json();
+
+    return data;
+  }
 }
 
 export const backendApi = new BackendApi();

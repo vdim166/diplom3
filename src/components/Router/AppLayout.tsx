@@ -63,9 +63,17 @@ export const AppLayout = () => {
         }
       }
 
-      setAllUsers(Object.keys(allUsers));
       setTasks(result);
     };
+
+    const getAllUsers = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) return;
+      const users = await backendApi.getAllUsers(token);
+
+      setAllUsers(users.users);
+    };
+    getAllUsers();
 
     getAllTasks();
     // eslint-disable-next-line react-hooks/exhaustive-deps

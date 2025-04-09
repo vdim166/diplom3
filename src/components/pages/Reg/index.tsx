@@ -53,7 +53,7 @@ export const Reg = () => {
           onChange={(e) => setPassword2(e.target.value)}
         />
 
-        <Link className={cls.link} to="/auth/registration">
+        <Link className={cls.link} to="/auth/login">
           <div>
             <p>Войти</p>
           </div>
