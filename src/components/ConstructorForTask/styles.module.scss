@@ -1,0 +1,16 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+  .commands {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2px;
+    button {
+      max-width: 250px;
+    }
+  }
+}

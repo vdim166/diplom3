@@ -9,6 +9,8 @@ export const Sidebar = () => {
     n("/auth/login");
   };
 
+  const { currentUser } = useGlobalContext();
+
   const { name } = useGlobalContext();
   return (
     <div className={cls.main}>
@@ -33,6 +35,12 @@ export const Sidebar = () => {
       <Link to={"/stats"} className={cls.option}>
         Статистика
       </Link>
+
+      {currentUser?.isManager && (
+        <Link to={"/for/manager"} className={cls.option}>
+          Для менеджера
+        </Link>
+      )}
 
       <div className={cls.userSection}>
         <div className={cls.userName}>{name}</div>

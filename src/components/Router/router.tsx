@@ -10,6 +10,7 @@ import { TaskManager } from "../pages/TaskManager";
 import { Stats } from "../pages/Stats";
 import { Login } from "../pages/Login";
 import { Reg } from "../pages/Reg";
+import { ForManagerPage } from "../pages/ForManager";
 
 export const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ export const router = createBrowserRouter([
           {
             path: "stats",
             element: <Stats />,
+          },
+          {
+            path: "for/manager",
+            element: <ForManagerPage />,
           },
         ],
       },

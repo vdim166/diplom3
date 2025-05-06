@@ -1,0 +1,15 @@
+.modalMain {
+  background-color: white;
+  z-index: 1000;
+  padding: 50px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .back {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
+}

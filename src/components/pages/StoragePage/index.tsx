@@ -68,13 +68,7 @@ export const StoragePage = () => {
     const fetchData = async () => {
       const result: StorageType = {};
 
-      const data: {
-        category: string;
-        count: number;
-        id: string;
-        name: string;
-        storage_id: string;
-      }[] = await backendApi.fetchStorage();
+      const data = await backendApi.fetchStorage();
 
       data.forEach((item) => {
         if (!result[item.storage_id]) {
