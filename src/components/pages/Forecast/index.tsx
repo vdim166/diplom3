@@ -1,33 +1,9 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import cls from "./styles.module.scss";
 import { useGlobalContext } from "../../Contexts/useGlobalContext";
 import { MODALS } from "../../ModalComponent/types";
 import { backendApi } from "../../utils/backendApi";
-
-const productIndexesRu = [
-  "Клубника",
-  "Салат Романо",
-  "Краснолистный салат",
-  "Картофель",
-  "Апельсины",
-  "Салат Айсберг",
-  "Зеленолистный салат",
-  "Сельдерей",
-  "Цветная капуста",
-  "Морковь",
-  "Дыня Канталупа",
-  "Соцветия брокколи",
-  "Авокадо",
-  "Пучки брокколи",
-  "Спаржа",
-  "Виноград Флейм",
-  "Виноград Томпсон",
-  "Дыня Медовая",
-  "Помидоры",
-  "Сливы",
-  "Персики",
-  "Нектарины",
-];
+import { productIndexesRu } from "../../consts/productIndexesRu";
 
 const RUB = 80;
 
@@ -35,12 +11,34 @@ export const Forecast = () => {
   const [text, setText] = useState<string[]>([]);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isUserScrolledUp, setIsUserScrolledUp] = useState(false);
+
   const { setCurrentOpenModal, setModalData } = useGlobalContext();
 
   const myText = "Запрашивание предсказаний...";
 
   const pause = (ms: number = 0) => new Promise((res) => setTimeout(res, ms));
+  const checkIfScrolledToBottom = () => {
+    if (!containerRef.current) return true;
+    const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+    return scrollTop + clientHeight >= scrollHeight - 10; // +10px допуск
+  };
 
+  useEffect(() => {
+    if (!isUserScrolledUp && containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
+
+  const handleScroll = () => {
+    if (!checkIfScrolledToBottom()) {
+      setIsUserScrolledUp(true); // Пользователь ушёл вверх
+    } else {
+      setIsUserScrolledUp(false); // Пользователь внизу
+    }
+  };
   const generateResponse = async () => {
     const currentIndex = text.length;
 
@@ -70,7 +68,9 @@ export const Forecast = () => {
     await pause(500);
 
     let max = 0;
-    let product = -1;
+
+    const best = [];
+    const worst = [];
 
     for (let i = 0; i < data.length; ++i) {
       const item = data[i];
@@ -81,9 +81,14 @@ export const Forecast = () => {
 
       const value = result[i].price - item.farmprice;
 
+      if (value > 0) {
+        best.push({ index: i, value });
+      } else if (value < 0) {
+        worst.push({ index: i, value });
+      }
+
       if (value > max) {
         max = value;
-        product = i;
       }
 
       setText((prev) => [...prev, ""]);
@@ -103,45 +108,28 @@ export const Forecast = () => {
 
     setText((prev) => [...prev, "____________________________"]);
 
-    if (product != -1) {
-      const str = `Предсказание на ${productIndexesRu[product]} больше на ${(
-        Number(max.toFixed(2)) * RUB
-      ).toFixed(2)}₽`;
+    if (best.length > 0) {
+      for (let i = 0; i < best.length; ++i) {
+        const str = `Предсказание на ${
+          productIndexesRu[best[i].index]
+        } больше на ${(Number(best[i].value.toFixed(2)) * RUB).toFixed(2)}₽`;
 
-      setText((prev) => [...prev, ""]);
-      for (let j = 0; j < str.length; ++j) {
-        await pause(10);
-        const elem = str[j];
-        setText((prev) => {
-          const newState = [...prev];
+        setText((prev) => [...prev, ""]);
+        for (let j = 0; j < str.length; ++j) {
+          await pause(10);
+          const elem = str[j];
+          setText((prev) => {
+            const newState = [...prev];
 
-          newState[newState.length - 1] =
-            (prev[newState.length - 1] || "") + elem;
+            newState[newState.length - 1] =
+              (prev[newState.length - 1] || "") + elem;
 
-          return newState;
-        });
+            return newState;
+          });
+        }
       }
 
-      setText((prev) => [...prev, "____________________________"]);
-
-      const newStr = `Хотите создать задачу на покупку ${productIndexesRu[product]}?`;
-      setText((prev) => [...prev, ""]);
-      for (let j = 0; j < newStr.length; ++j) {
-        await pause(10);
-        const elem = newStr[j];
-        setText((prev) => {
-          const newState = [...prev];
-
-          newState[newState.length - 1] =
-            (prev[newState.length - 1] || "") + elem;
-
-          return newState;
-        });
-      }
-
-      setModalData(productIndexesRu[product]);
       pause(500);
-      setCurrentOpenModal(MODALS.ADD_TASK);
     } else {
       const str = `Выгоды не выявлено`;
       setText((prev) => [...prev, ""]);
@@ -159,12 +147,55 @@ export const Forecast = () => {
       }
     }
 
+    if (worst.length > 0) {
+      for (let i = 0; i < best.length; ++i) {
+        const str = `Предсказание на ${
+          productIndexesRu[worst[i].index]
+        } меньше на ${(Number(worst[i].value.toFixed(2)) * RUB).toFixed(2)}₽`;
+
+        setText((prev) => [...prev, ""]);
+        for (let j = 0; j < str.length; ++j) {
+          await pause(10);
+          const elem = str[j];
+          setText((prev) => {
+            const newState = [...prev];
+
+            newState[newState.length - 1] =
+              (prev[newState.length - 1] || "") + elem;
+
+            return newState;
+          });
+        }
+      }
+    }
+
+    setText((prev) => [...prev, "____________________________"]);
+
+    const newStr = `Хотите создать задачу по предоставленной статистике?`;
+    setText((prev) => [...prev, ""]);
+    for (let j = 0; j < newStr.length; ++j) {
+      await pause(10);
+      const elem = newStr[j];
+      setText((prev) => {
+        const newState = [...prev];
+
+        newState[newState.length - 1] =
+          (prev[newState.length - 1] || "") + elem;
+
+        return newState;
+      });
+    }
+
+    setModalData({ best, worst });
+    pause(500);
+    setCurrentOpenModal(MODALS.ADD_TASK);
+
     setIsDisabled(false);
   };
 
   return (
     <div className={cls.main}>
-      <div className={cls.window}>
+      <div className={cls.window} ref={containerRef} onScroll={handleScroll}>
         {text.map((t) => {
           return (
             <p

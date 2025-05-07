@@ -1,4 +1,5 @@
 import { useGlobalContext } from "../../Contexts/useGlobalContext";
+import { ExpiredProductsManager } from "../../ExpiredProductsManager";
 import NumberAnimation from "../../NumberAnimation";
 import cls from "./styles.module.scss";
 
@@ -40,6 +41,10 @@ export const MainPage = () => {
             id="cdkscmskcmksdcjn"
           />
         )}
+      </div>
+
+      <div className={cls.expiredProductsManagerWrapper}>
+        <ExpiredProductsManager />
       </div>
     </div>
   );

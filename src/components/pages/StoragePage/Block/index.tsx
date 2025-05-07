@@ -2,6 +2,7 @@ import { CSSProperties, useLayoutEffect, useRef, useState } from "react";
 import cls from "../styles.module.scss";
 import s from "./styles.module.scss";
 import { Cross } from "../../../icons/Cross";
+import { productObject } from "../../../utils/fetchProductDataApi";
 
 type BlockType = {
   style: CSSProperties;
@@ -91,7 +92,7 @@ export const Block = ({
               return (
                 <div className={s.option} key={item.name}>
                   <p style={{ whiteSpace: "nowrap", padding: 0, margin: 0 }}>
-                    {item.name}
+                    {productObject[item.name]}
                   </p>
                   <p style={{ margin: 0 }}>{item.count}</p>
                 </div>

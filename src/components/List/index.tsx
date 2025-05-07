@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import cls from "./styles.module.scss";
 
@@ -21,6 +21,7 @@ export const List = ({
       setIsPickedUser(option);
     };
   };
+  const randId = useRef(Math.random().toString());
 
   return (
     <div className={cls.wrapper}>
@@ -31,7 +32,11 @@ export const List = ({
         <div className={cls.modal}>
           {allOptions &&
             allOptions.map((user) => (
-              <div className={cls.option} onClick={handle(user)} key={user}>
+              <div
+                className={cls.option}
+                onClick={handle(user)}
+                key={user + randId.current}
+              >
                 <p>{user}</p>
               </div>
             ))}

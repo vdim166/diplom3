@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import cls from "./styles.module.scss";
 import { useGlobalContext } from "../Contexts/useGlobalContext";
+import logo from "../shared/images/istorage.png";
 
 export const Sidebar = () => {
   const n = useNavigate();
@@ -14,6 +15,10 @@ export const Sidebar = () => {
   const { name } = useGlobalContext();
   return (
     <div className={cls.main}>
+      <div className={cls.logoWrapper}>
+        <img src={logo} />
+        <p>IStorage</p>
+      </div>
       <Link
         to={"/"}
         className={cls.option}

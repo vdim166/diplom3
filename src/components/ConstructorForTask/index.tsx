@@ -3,7 +3,8 @@ import { ActiveButton } from "../ActiveButton";
 import cls from "./styles.module.scss";
 import { SellModal } from "./modals/SellModal";
 import { MoveModal } from "./modals/MoveModal";
-import { ChangePrice } from "./modals/ChangePrice";
+import { AnswerType } from "../pages/ForManager";
+import { AddProductModal } from "./modals/AddProduct";
 
 const commands: {
   [key: string]: { [key: string]: { text: string } };
@@ -11,7 +12,6 @@ const commands: {
   Продукт: {
     sell: { text: "Продать" },
     move: { text: "Передвинуть" },
-    // changePrice: { text: "Изменить цену" },
     addProduct: { text: "Добавить продукт" },
   },
 };
@@ -31,19 +31,18 @@ const CustomModals = ({
     return <SellModal closeModal={closeModal} setAnswer={setAnswer} />;
   } else if (modalTag === "move") {
     return <MoveModal closeModal={closeModal} setAnswer={setAnswer} />;
-  } else if (modalTag === "changePrice") {
-    return <ChangePrice closeModal={closeModal} setAnswer={setAnswer} />;
   } else if (modalTag === "addProduct") {
-    return;
+    return <AddProductModal closeModal={closeModal} setAnswer={setAnswer} />;
   }
 };
 
-export type AnswerType = {
-  what: string | null;
-  action: string | null;
-};
-
-export const ConstructorForTask = () => {
+export const ConstructorForTask = ({
+  answer,
+  setAnswer,
+}: {
+  answer: AnswerType;
+  setAnswer: (answer: AnswerType) => void;
+}) => {
   const [pickedCommand, setPickedCommand] = useState<string | null>(null);
 
   const [promptModal, setPromptModal] = useState<string | null>(null);
@@ -51,11 +50,6 @@ export const ConstructorForTask = () => {
   const closeModal = () => {
     setPromptModal(null);
   };
-
-  const [answer, setAnswer] = useState<AnswerType>({
-    what: null,
-    action: null,
-  });
 
   return (
     <>

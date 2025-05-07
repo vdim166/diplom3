@@ -1,32 +1,17 @@
-import { useEffect, useState } from "react";
-import { ActiveButton } from "../../ActiveButton";
-import { Modal } from "../../Modal";
+import { useState } from "react";
 import { TypeForModal } from "./SellModal";
+import { Modal } from "../../Modal";
 import cls from "./styles.module.scss";
-import { backendApi, FetchedStorageItem } from "../../utils/backendApi";
+import { ActiveButton } from "../../ActiveButton";
 import { List } from "../../List";
-import { productObject } from "../../utils/fetchProductDataApi";
 import { Input } from "../../Input";
+import { productObject } from "../../utils/fetchProductDataApi";
 
-export const MoveModal = ({ closeModal, setAnswer }: TypeForModal) => {
+export const AddProductModal = ({ closeModal, setAnswer }: TypeForModal) => {
   const [pickedProduct, setPickedProduct] = useState<string | null>(null);
-  const [fetchedProducts, setFetchedProducts] = useState<
-    FetchedStorageItem[] | null
-  >(null);
+
   const [pickedStorage, setPickedStorage] = useState<string | null>(null);
   const [count, setCount] = useState<number>(0);
-
-  useEffect(() => {
-    const fetchStorage = async () => {
-      const data = await backendApi.fetchStorage();
-
-      setFetchedProducts(data);
-    };
-
-    fetchStorage();
-  }, []);
-
-  const [to, setTo] = useState<string | null>(null);
 
   return (
     <Modal>
@@ -41,7 +26,7 @@ export const MoveModal = ({ closeModal, setAnswer }: TypeForModal) => {
               marginTop: "10px",
             }}
           >
-            Откуда передвинуть
+            Куда добавить
           </p>
           <List
             allOptions={Array(24)
@@ -58,16 +43,10 @@ export const MoveModal = ({ closeModal, setAnswer }: TypeForModal) => {
                 marginTop: "10px",
               }}
             >
-              Что передвинуть
+              Что добавить
             </p>
             <List
-              allOptions={
-                fetchedProducts
-                  ? fetchedProducts
-                      .filter((p) => p.storage_id === pickedStorage)
-                      .map((p) => p.name)
-                  : []
-              }
+              allOptions={Object.keys(productObject)}
               pickedUser={pickedProduct}
               setIsPickedUser={setPickedProduct}
             />
@@ -81,13 +60,7 @@ export const MoveModal = ({ closeModal, setAnswer }: TypeForModal) => {
                 marginTop: "10px",
               }}
             >
-              Какое количество (max:{" "}
-              {
-                fetchedProducts?.filter(
-                  (p) => p.storage_id === pickedStorage
-                )[0]?.count
-              }
-              )
+              Какое количество
             </p>
 
             <Input
@@ -97,40 +70,10 @@ export const MoveModal = ({ closeModal, setAnswer }: TypeForModal) => {
               }}
               value={count}
               onChange={(e) => {
-                if (fetchedProducts)
-                  if (
-                    Number(e.target.value) <=
-                    Number(
-                      fetchedProducts.filter(
-                        (p) => p.storage_id === pickedStorage
-                      )[0]?.count
-                    )
-                  ) {
-                    setCount(Number(e.target.value));
-                  }
+                setCount(Number(e.target.value));
               }}
             />
           </div>
-        )}
-
-        {pickedProduct && (
-          <>
-            <p
-              style={{
-                marginTop: "10px",
-              }}
-            >
-              Куда передвинуть
-            </p>
-            <List
-              allOptions={Array(24)
-                .fill(1)
-                .map((_, index) => `storage_${index + 1}`)
-                .filter((storage) => storage !== pickedStorage)}
-              pickedUser={to}
-              setIsPickedUser={setTo}
-            />
-          </>
         )}
         <div
           style={{
@@ -148,13 +91,12 @@ export const MoveModal = ({ closeModal, setAnswer }: TypeForModal) => {
 
                 setAnswer({
                   what: productObject[pickedProduct],
-                  action: `передвинуть в ${pickedStorage} (${count})`,
+                  action: `добавить на ${pickedStorage} (${count})`,
                   query: JSON.stringify({
-                    action: "move",
+                    action: "add",
                     product: pickedProduct,
                     count,
-                    storage: to,
-                    from: pickedStorage,
+                    storage: pickedStorage,
                   }),
                 });
               }}

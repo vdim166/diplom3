@@ -9,6 +9,14 @@ export type ResponseTask = {
   title: string;
 };
 
+export type FetchedStorageItem = {
+  category: string;
+  count: number;
+  id: string;
+  name: string;
+  storage_id: string;
+};
+
 class BackendApi {
   private defaultUrl: string = "http://localhost:8000";
 
@@ -67,6 +75,7 @@ class BackendApi {
     title: string;
     description: string;
     assigned_to: string;
+    query?: string;
   }) {
     const response = await fetch(`${this.defaultUrl}/tasks`, {
       method: "POST",
@@ -101,13 +110,7 @@ class BackendApi {
       },
     });
 
-    const data: {
-      category: string;
-      count: number;
-      id: string;
-      name: string;
-      storage_id: string;
-    }[] = await response.json();
+    const data: FetchedStorageItem[] = await response.json();
 
     return data;
   }

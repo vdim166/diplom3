@@ -5,6 +5,7 @@ import cls from "./styles.module.scss";
 import { backendApi } from "../../utils/backendApi";
 import { useState } from "react";
 import { useGlobalContext } from "../../Contexts/useGlobalContext";
+import logo from "../../shared/images/istorage.png";
 
 export const Login = () => {
   const [login, setLogin] = useState<string>("");
@@ -39,6 +40,10 @@ export const Login = () => {
 
   return (
     <div className={cls.main}>
+      <div className={cls.logo}>
+        <img src={logo} />
+        <p>IStorage</p>
+      </div>
       <h1>Войти в приложение</h1>
 
       <div className={cls.form}>
