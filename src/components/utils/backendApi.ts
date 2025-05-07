@@ -15,6 +15,7 @@ export type FetchedStorageItem = {
   id: string;
   name: string;
   storage_id: string;
+  expiration_date: string;
 };
 
 class BackendApi {
