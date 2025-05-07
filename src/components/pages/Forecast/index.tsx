@@ -29,6 +29,8 @@ const productIndexesRu = [
   "Нектарины",
 ];
 
+const RUB = 80;
+
 export const Forecast = () => {
   const [text, setText] = useState<string[]>([]);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
@@ -40,7 +42,7 @@ export const Forecast = () => {
   const pause = (ms: number = 0) => new Promise((res) => setTimeout(res, ms));
 
   const generateResponse = async () => {
-    let currentIndex = text.length;
+    const currentIndex = text.length;
 
     if (currentIndex > 0) {
       setText((prev) => [...prev, "____________________________"]);
@@ -73,9 +75,9 @@ export const Forecast = () => {
     for (let i = 0; i < data.length; ++i) {
       const item = data[i];
 
-      const myText2 = `${productIndexesRu[item.product_code]} на ферме=${
-        item.farmprice
-      }$, предсказано ${result[i].price}$`;
+      const myText2 = `${productIndexesRu[item.product_code]} на ферме=${(
+        item.farmprice * RUB
+      ).toFixed(2)}₽, предсказано ${(result[i].price * RUB).toFixed(2)}₽`;
 
       const value = result[i].price - item.farmprice;
 
@@ -102,9 +104,9 @@ export const Forecast = () => {
     setText((prev) => [...prev, "____________________________"]);
 
     if (product != -1) {
-      const str = `Предсказание на ${
-        productIndexesRu[product]
-      } больше на ${max.toFixed(2)}$`;
+      const str = `Предсказание на ${productIndexesRu[product]} больше на ${(
+        Number(max.toFixed(2)) * RUB
+      ).toFixed(2)}₽`;
 
       setText((prev) => [...prev, ""]);
       for (let j = 0; j < str.length; ++j) {

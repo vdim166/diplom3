@@ -1,9 +1,12 @@
 import { Navigate, Outlet } from "react-router-dom";
 import { backendApi } from "../utils/backendApi";
 import { useEffect, useState } from "react";
+import { useGlobalContext } from "../Contexts/useGlobalContext";
 
 export const ProtectedRouter = () => {
   const [isSessionAlive, setIsSessionAlive] = useState<boolean | null>(null);
+
+  const { setCurrentUser } = useGlobalContext();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -12,17 +15,23 @@ export const ProtectedRouter = () => {
         const response = await backendApi.checkToken(token);
 
         if (response.ok) {
-          const data: {
+          type DataType = {
             is_valid: boolean;
             user: {
-              email: string | null;
-              full_name: string | null;
               username: string;
+              is_manager: boolean;
             };
-          } = await response.json();
+          };
+
+          const data: DataType = await response.json();
 
           if (data.is_valid) {
             setIsSessionAlive(true);
+
+            setCurrentUser({
+              username: data.user.username,
+              isManager: data.user.is_manager,
+            });
           } else {
             setIsSessionAlive(false);
           }
@@ -34,6 +43,7 @@ export const ProtectedRouter = () => {
     } else {
       setIsSessionAlive(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (isSessionAlive === null) {

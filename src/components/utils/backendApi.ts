@@ -101,7 +101,15 @@ class BackendApi {
       },
     });
 
-    return await response.json();
+    const data: {
+      category: string;
+      count: number;
+      id: string;
+      name: string;
+      storage_id: string;
+    }[] = await response.json();
+
+    return data;
   }
 
   async forecast() {

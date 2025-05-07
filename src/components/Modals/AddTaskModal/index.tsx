@@ -3,49 +3,13 @@ import { useGlobalContext } from "../../Contexts/useGlobalContext";
 import { MODALS } from "../../ModalComponent/types";
 import cls from "./styles.module.scss";
 import { backendApi } from "../../utils/backendApi";
-
-const List = ({
-  pickedUser,
-  setIsPickedUser,
-}: {
-  pickedUser: string | null;
-  setIsPickedUser: React.Dispatch<React.SetStateAction<string | null>>;
-}) => {
-  const { allUsers } = useGlobalContext();
-
-  const [isClicked, setIsClicked] = useState(false);
-
-  const handleUser = (user: string) => {
-    return () => {
-      setIsClicked(false);
-      setIsPickedUser(user);
-    };
-  };
-
-  return (
-    <div className={cls.wrapper}>
-      <div className={cls.list} onClick={() => setIsClicked((prev) => !prev)}>
-        <p className={cls.mainTitle}>{pickedUser}</p>
-      </div>
-      {isClicked && (
-        <div className={cls.modal}>
-          {allUsers &&
-            allUsers.map((user) => (
-              <div className={cls.option} onClick={handleUser(user)} key={user}>
-                <p>{user}</p>
-              </div>
-            ))}
-        </div>
-      )}
-    </div>
-  );
-};
+import { List } from "../../List";
 
 export const AddTaskModal = () => {
   const { setCurrentOpenModal, modalData, setModalData } = useGlobalContext();
 
   const [pickedUser, setIsPickedUser] = useState<string | null>(null);
-  const { setTasks } = useGlobalContext();
+  const { setTasks, allUsers } = useGlobalContext();
   const [showUsers, setShowUsers] = useState<boolean>(false);
 
   const closeModal = () => {
@@ -82,13 +46,19 @@ export const AddTaskModal = () => {
     }
   };
 
+  if (!allUsers) return;
+
   return (
     <div className={cls.main}>
       <p>Нужно добавить задачу в менеджер задач для покупки {modalData}?</p>
       {showUsers && (
         <div className={cls.wrapperList}>
           <p>Выберите пользователя</p>
-          <List pickedUser={pickedUser} setIsPickedUser={setIsPickedUser} />
+          <List
+            pickedUser={pickedUser}
+            setIsPickedUser={setIsPickedUser}
+            allOptions={allUsers}
+          />
         </div>
       )}
       <div className={cls.buttons}>

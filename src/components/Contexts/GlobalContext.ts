@@ -1,6 +1,7 @@
 import { createContext } from "react";
 import { Task } from "../pages/TaskManager";
 import { MODALS } from "../ModalComponent/types";
+import { CurrentType } from "./GlobalContextProvider";
 
 export type GlobalContextType = {
   name: string | null;
@@ -14,7 +15,12 @@ export type GlobalContextType = {
     React.SetStateAction<keyof typeof MODALS | null>
   >;
 
+  currentUser: CurrentType | null;
+  setCurrentUser: React.Dispatch<React.SetStateAction<CurrentType | null>>;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   modalData: any;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   setModalData: any;
 };
 
@@ -29,4 +35,6 @@ export const GlobalContext = createContext<GlobalContextType>({
   setCurrentOpenModal: () => {},
   modalData: null,
   setModalData: () => {},
+  currentUser: null,
+  setCurrentUser: () => {},
 });
