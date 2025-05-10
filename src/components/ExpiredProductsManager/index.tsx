@@ -68,39 +68,37 @@ export const ExpiredProductsManager = () => {
   const handle = async () => {
     if (!currentUser) return;
 
+    const text = [];
+
     for (let i = 0; i < expiredProducts.length; ++i) {
-      try {
-        const data = await backendApi.createTask({
-          title: `Срочно продать ${productObject[expiredProducts[i].name]}`,
-          assigned_to: currentUser.username,
-          description: "",
-          query: JSON.stringify({
-            action: "sell",
-            product: expiredProducts[i].name,
-            count: expiredProducts[i].count,
-            storage: expiredProducts[i].storage_id,
-          }),
-        });
-
-        setTasks((prev) => {
-          if (!prev) return null;
-
-          return [
-            ...prev,
-            {
-              id: data.id,
-              status: data.status,
-              text: data.title,
-              worker: data.assigned_to,
-            },
-          ];
-        });
-      } catch (error) {
-        console.log("error", error);
-      }
+      text.push(productObject[expiredProducts[i].name]);
     }
 
-    setIsCreated(true);
+    try {
+      const data = await backendApi.createTask({
+        title: `Срочно продать ${text.join(", ")}`,
+        assigned_to: currentUser.username,
+        description: "",
+      });
+
+      setTasks((prev) => {
+        if (!prev) return null;
+
+        return [
+          ...prev,
+          {
+            id: data.id,
+            status: data.status,
+            text: data.title,
+            worker: data.assigned_to,
+          },
+        ];
+      });
+
+      setIsCreated(true);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
 
   return (

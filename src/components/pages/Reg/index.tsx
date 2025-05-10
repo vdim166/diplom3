@@ -40,7 +40,7 @@ export const Reg = () => {
         <img src={logo} />
         <p>IStorage</p>
       </div>
-      <h1>Зарегестрироваться</h1>
+      <h1>Зарегистрироваться</h1>
       <div className={cls.form}>
         <CustomInput
           text="Логин"

@@ -60,7 +60,7 @@ export const Login = () => {
 
         <Link className={cls.link} to="/auth/registration">
           <div>
-            <p>Зарегестрироваться</p>
+            <p>Зарегистрироваться</p>
           </div>
         </Link>
 
