@@ -11,6 +11,7 @@ export const AppLayout = () => {
   useEffect(() => {
     const getAllTasks = async () => {
       const data = await backendApi.getAllTasks();
+
       const allUsers: { [key: string]: number } = {};
 
       const result: Task[] = [];

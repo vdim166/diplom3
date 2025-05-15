@@ -19,8 +19,8 @@ export type FetchedStorageItem = {
 };
 
 class BackendApi {
-  // private defaultUrl: string = "http://localhost:8000";
-  private defaultUrl: string = "";
+  // private defaultUrl: string = "http://localhost:8000/api";
+  private defaultUrl: string = "/api";
 
   async checkToken(token: string) {
     const response = await fetch(`${this.defaultUrl}/validate-token`, {
