@@ -48,7 +48,7 @@ export const Card = ({ style, taskText, worker }: CardProps) => {
     <div className={cls.card} style={style}>
       <div className={cls.taskBlock}>
         <p className={cls.taskP}>
-          Задача: {taskText.substring(0, 110)}
+          Задача: {taskText.replace("storage_", "стеллаж ").substring(0, 110)}
           {taskText.length > 110 && "..."}
         </p>
       </div>

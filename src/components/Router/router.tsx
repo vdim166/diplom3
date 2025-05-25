@@ -11,6 +11,7 @@ import { Stats } from "../pages/Stats";
 import { Login } from "../pages/Login";
 import { Reg } from "../pages/Reg";
 import { ForManagerPage } from "../pages/ForManager";
+import { ProductsPage } from "../pages/Products";
 
 export const router = createBrowserRouter([
   {
@@ -44,7 +45,17 @@ export const router = createBrowserRouter([
           },
           {
             path: "storage",
-            element: <StoragePage />,
+
+            children: [
+              {
+                path: "",
+                element: <StoragePage />,
+              },
+              {
+                path: "products",
+                element: <ProductsPage />,
+              },
+            ],
           },
           {
             path: "forecast",

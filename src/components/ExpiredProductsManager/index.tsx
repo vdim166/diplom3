@@ -105,9 +105,10 @@ export const ExpiredProductsManager = () => {
     <div className={cls.main}>
       <p className={cls.title}>Товары которые скоро просрочаться</p>
       <div className={cls.block}>
-        {expiredProducts.map((product) => {
+        {expiredProducts.map((product, index) => {
           return (
             <div
+              key={`${product.name}-${product.daysLeft}-${index}`}
               className={`${cls.option} ${
                 product.daysLeft <= 5 ? cls.option_red : cls.option_light
               }`}
