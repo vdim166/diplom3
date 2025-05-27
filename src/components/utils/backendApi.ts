@@ -151,6 +151,71 @@ class BackendApi {
 
     return data;
   }
+
+  async deleteTask(id: string) {
+    const response = await fetch(`${this.defaultUrl}/tasks/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response;
+  }
+
+  async getWorkers() {
+    const response = await fetch(`${this.defaultUrl}/workers`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    return data;
+  }
+
+  async getManagers() {
+    const response = await fetch(`${this.defaultUrl}/managers`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    return data;
+  }
+
+  async givePermission(username: string) {
+    const response = await fetch(`${this.defaultUrl}/user/update/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        is_manager: true,
+      }),
+    });
+
+    return response;
+  }
+
+  async removePermission(username: string) {
+    const response = await fetch(`${this.defaultUrl}/user/update/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+        is_manager: false,
+      }),
+    });
+
+    return response;
+  }
 }
 
 export const backendApi = new BackendApi();

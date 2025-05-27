@@ -115,21 +115,40 @@ export const TaskManager = () => {
   const filteredTasks = (status: "todo" | "inProgress" | "done") => {
     return tasks
       .filter((task) => task.status === status)
-      .map((task) => (
-        <div
-          key={task.id}
-          draggable
-          onDragStart={(e) => handleDragStart(e, task)}
-          onDrag={handleDrag}
-          onDragEnd={handleDragEnd}
-        >
-          <Card
-            style={{ marginTop: "20px" }}
-            taskText={task.text}
-            worker={task.worker}
-          />
-        </div>
-      ));
+      .map((task) => {
+        const deleteHandle = async () => {
+          try {
+            const response = await backendApi.deleteTask(task.id);
+
+            if (response.ok) {
+              setTasks((prev) => {
+                if (!prev) return null;
+
+                return prev.filter((t) => t.id !== task.id);
+              });
+            }
+          } catch (error) {
+            console.log("error", error);
+          }
+        };
+
+        return (
+          <div
+            key={task.id}
+            draggable
+            onDragStart={(e) => handleDragStart(e, task)}
+            onDrag={handleDrag}
+            onDragEnd={handleDragEnd}
+          >
+            <Card
+              style={{ marginTop: "20px" }}
+              taskText={task.text}
+              worker={task.worker}
+              deleteHandle={deleteHandle}
+            />
+          </div>
+        );
+      });
   };
 
   return (
@@ -206,6 +225,7 @@ export const TaskManager = () => {
               border: "2px dashed white",
               boxShadow: "0 4px 8px rgba(0,0,0,0.3)",
             }}
+            deleteHandle={() => {}}
           />
         </div>
       )}

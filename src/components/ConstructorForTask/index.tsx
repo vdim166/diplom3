@@ -5,6 +5,8 @@ import { SellModal } from "./modals/SellModal";
 import { MoveModal } from "./modals/MoveModal";
 import { AnswerType } from "../pages/ForManager";
 import { AddProductModal } from "./modals/AddProduct";
+import { GivePermissionModal } from "./modals/GivePermissionModal";
+import { RemovePermissionModal } from "./modals/RemovePermissionModal";
 
 const commands: {
   [key: string]: { [key: string]: { text: string } };
@@ -13,6 +15,10 @@ const commands: {
     sell: { text: "Продать" },
     move: { text: "Передвинуть" },
     addProduct: { text: "Добавить продукт" },
+  },
+  Админ: {
+    give: { text: "Дать права" },
+    remove: { text: "Удалить права" },
   },
 };
 
@@ -33,6 +39,14 @@ const CustomModals = ({
     return <MoveModal closeModal={closeModal} setAnswer={setAnswer} />;
   } else if (modalTag === "addProduct") {
     return <AddProductModal closeModal={closeModal} setAnswer={setAnswer} />;
+  } else if (modalTag === "give") {
+    return (
+      <GivePermissionModal closeModal={closeModal} setAnswer={setAnswer} />
+    );
+  } else if (modalTag === "remove") {
+    return (
+      <RemovePermissionModal closeModal={closeModal} setAnswer={setAnswer} />
+    );
   }
 };
 
