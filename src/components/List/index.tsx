@@ -1,24 +1,25 @@
 import { useRef, useState } from "react";
 
 import cls from "./styles.module.scss";
+import { KeyValueType } from "../ConstructorForTask/types/TypeForModal";
 
 type ListProps = {
-  pickedUser: string | null;
-  setIsPickedUser: React.Dispatch<React.SetStateAction<string | null>>;
-  allOptions: string[];
+  pickedOption: KeyValueType | null;
+  setIsPickedOption: (value: KeyValueType | null) => void;
+  allOptions: KeyValueType[];
 };
 
 export const List = ({
-  pickedUser,
-  setIsPickedUser,
+  pickedOption,
+  setIsPickedOption,
   allOptions,
 }: ListProps) => {
   const [isClicked, setIsClicked] = useState(false);
 
-  const handle = (option: string) => {
+  const handle = (option: KeyValueType) => {
     return () => {
       setIsClicked(false);
-      setIsPickedUser(option);
+      setIsPickedOption(option);
     };
   };
   const randId = useRef(Math.random().toString());
@@ -26,18 +27,18 @@ export const List = ({
   return (
     <div className={cls.wrapper}>
       <div className={cls.list} onClick={() => setIsClicked((prev) => !prev)}>
-        <p className={cls.mainTitle}>{pickedUser}</p>
+        <p className={cls.mainTitle}>{pickedOption?.value}</p>
       </div>
       {isClicked && (
         <div className={cls.modal}>
           {allOptions &&
-            allOptions.map((user) => (
+            allOptions.map((option) => (
               <div
                 className={cls.option}
-                onClick={handle(user)}
-                key={user + randId.current}
+                onClick={handle(option)}
+                key={option.key + randId.current}
               >
-                <p>{user}</p>
+                <p>{option.value}</p>
               </div>
             ))}
         </div>

@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { ActiveButton } from "../ActiveButton";
 import cls from "./styles.module.scss";
-import { SellModal } from "./modals/SellModal";
-import { MoveModal } from "./modals/MoveModal";
 import { AnswerType } from "../pages/ForManager";
+import { SellModal } from "./modals/SellModal";
 import { AddProductModal } from "./modals/AddProduct";
+import { MoveModal } from "./modals/MoveModal";
 import { GivePermissionModal } from "./modals/GivePermissionModal";
 import { RemovePermissionModal } from "./modals/RemovePermissionModal";
 
@@ -50,15 +50,16 @@ const CustomModals = ({
   }
 };
 
+type ConstructorForTaskType = {
+  answer: AnswerType;
+  setAnswer: (answer: AnswerType) => void;
+};
+
 export const ConstructorForTask = ({
   answer,
   setAnswer,
-}: {
-  answer: AnswerType;
-  setAnswer: (answer: AnswerType) => void;
-}) => {
+}: ConstructorForTaskType) => {
   const [pickedCommand, setPickedCommand] = useState<string | null>(null);
-
   const [promptModal, setPromptModal] = useState<string | null>(null);
 
   const closeModal = () => {

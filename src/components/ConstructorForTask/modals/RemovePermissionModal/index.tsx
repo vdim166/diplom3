@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { backendApi } from "../../utils/backendApi";
-import cls from "./styles.module.scss";
-import { Modal } from "../../Modal";
-import { TypeForModal } from "./SellModal";
-import { ActiveButton } from "../../ActiveButton";
-import { List } from "../../List";
+import cls from "../styles.module.scss";
+import { backendApi } from "../../../utils/backendApi";
+import { KeyValueType, TypeForModal } from "../../types/TypeForModal";
+import { Modal } from "../../../Modal";
+import { ActiveButton } from "../../../ActiveButton";
+import { List } from "../../../List";
 
 export const RemovePermissionModal = ({ closeModal }: TypeForModal) => {
-  const [pickedUser, setIsPickedUser] = useState<string | null>(null);
+  const [pickedUser, setIsPickedUser] = useState<KeyValueType | null>(null);
 
   const [workers, setWorkers] = useState<string[]>([]);
 
@@ -23,7 +23,7 @@ export const RemovePermissionModal = ({ closeModal }: TypeForModal) => {
 
   const handleSubmit = async () => {
     if (!pickedUser) return;
-    await backendApi.removePermission(pickedUser);
+    await backendApi.removePermission(pickedUser.key);
     closeModal();
   };
   return (
@@ -35,9 +35,11 @@ export const RemovePermissionModal = ({ closeModal }: TypeForModal) => {
 
         <p>У кого удалить?</p>
         <List
-          pickedUser={pickedUser}
-          setIsPickedUser={setIsPickedUser}
-          allOptions={workers || []}
+          pickedOption={pickedUser}
+          setIsPickedOption={setIsPickedUser}
+          allOptions={
+            workers.map((worker) => ({ key: worker, value: worker })) || []
+          }
         />
         <div>
           <ActiveButton onClick={handleSubmit}>Ok</ActiveButton>

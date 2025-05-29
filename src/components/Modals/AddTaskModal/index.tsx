@@ -6,11 +6,12 @@ import { backendApi } from "../../utils/backendApi";
 import { List } from "../../List";
 import { productIndexesRu } from "../../consts/productIndexesRu";
 import { getRandomColor } from "../../utils/getRandomColor";
+import { KeyValueType } from "../../ConstructorForTask/types/TypeForModal";
 
 export const AddTaskModal = () => {
   const { setCurrentOpenModal, modalData, setModalData } = useGlobalContext();
 
-  const [pickedUser, setIsPickedUser] = useState<string | null>(null);
+  const [pickedUser, setIsPickedUser] = useState<KeyValueType | null>(null);
   const { setTasks, allUsers } = useGlobalContext();
   const [showUsers, setShowUsers] = useState<boolean>(false);
 
@@ -31,7 +32,7 @@ export const AddTaskModal = () => {
         const data = await backendApi.createTask({
           title: `Необходимо купить ${productIndexesRu[best[i].index]}`,
           description: "",
-          assigned_to: pickedUser,
+          assigned_to: pickedUser.key,
         });
 
         setTasks((prev) => {
@@ -53,7 +54,7 @@ export const AddTaskModal = () => {
         const data = await backendApi.createTask({
           title: `Необходимо продать ${productIndexesRu[worst[i].index]}`,
           description: "",
-          assigned_to: pickedUser,
+          assigned_to: pickedUser.key,
         });
 
         setTasks((prev) => {
@@ -132,9 +133,9 @@ export const AddTaskModal = () => {
         <div className={cls.wrapperList}>
           <p>Выберите пользователя</p>
           <List
-            pickedUser={pickedUser}
-            setIsPickedUser={setIsPickedUser}
-            allOptions={allUsers}
+            pickedOption={pickedUser}
+            setIsPickedOption={setIsPickedUser}
+            allOptions={allUsers.map((user) => ({ key: user, value: user }))}
           />
         </div>
       )}

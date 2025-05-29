@@ -1,33 +1,29 @@
 import { useEffect, useState } from "react";
-import { backendApi, FetchedStorageItem } from "../../utils/backendApi";
-import { Modal } from "../../Modal";
-import { ActiveButton } from "../../ActiveButton";
-import { List } from "../../List";
-import cls from "./styles.module.scss";
-import { Input } from "../../Input";
-import { AnswerType } from "../../pages/ForManager";
-import { productObject } from "../../utils/fetchProductDataApi";
-
-export type TypeForModal = {
-  closeModal: () => void;
-  setAnswer: (answer: AnswerType) => void;
-};
+import cls from "../styles.module.scss";
+import { KeyValueType, TypeForModal } from "../../types/TypeForModal";
+import { backendApi, FetchedStorageItem } from "../../../utils/backendApi";
+import { Modal } from "../../../Modal";
+import { ActiveButton } from "../../../ActiveButton";
+import { List } from "../../../List";
+import { Input } from "../../../Input";
+import { productObject } from "../../../utils/fetchProductDataApi";
 
 export const SellModal = ({ closeModal, setAnswer }: TypeForModal) => {
-  const [pickedProduct, setPickedProduct] = useState<string | null>(null);
+  const [pickedProduct, setPickedProduct] = useState<KeyValueType | null>(null);
   const [fetchedProducts, setFetchedProducts] = useState<
     FetchedStorageItem[] | null
   >(null);
-  const [pickedStorage, setPickedStorage] = useState<string | null>(null);
-
+  const [pickedStorage, setPickedStorage] = useState<KeyValueType | null>(null);
   const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
     const fetchStorage = async () => {
-      const data = await backendApi.fetchStorage();
-      console.log("data", data);
-
-      setFetchedProducts(data);
+      try {
+        const data = await backendApi.fetchStorage();
+        setFetchedProducts(data);
+      } catch (error) {
+        console.log("error", error);
+      }
     };
 
     fetchStorage();
@@ -40,55 +36,47 @@ export const SellModal = ({ closeModal, setAnswer }: TypeForModal) => {
           <ActiveButton onClick={closeModal}>Назад</ActiveButton>
         </div>
         <>
-          <p
-            style={{
-              marginTop: "10px",
-            }}
-          >
-            Откуда продать
-          </p>
+          <p className={cls.mt10}>Откуда продать</p>
           <List
             allOptions={Array(24)
               .fill(1)
-              .map((_, index) => `storage_${index + 1}`)}
-            pickedUser={pickedStorage}
-            setIsPickedUser={setPickedStorage}
+              .map((_, index) => ({
+                value: `Стеллаж ${index + 1}`,
+                key: `storage_${index + 1}`,
+              }))}
+            pickedOption={pickedStorage}
+            setIsPickedOption={setPickedStorage}
           />
         </>
         {pickedStorage && (
           <>
-            <p
-              style={{
-                marginTop: "10px",
-              }}
-            >
-              Что продать
-            </p>
+            <p className={cls.mt10}>Что продать</p>
             <List
               allOptions={
                 pickedStorage
                   ? fetchedProducts
-                      ?.filter((p) => p.storage_id === pickedStorage)
-                      .map((p) => p.name) || []
+                      ?.filter((p) => p.storage_id === pickedStorage.key)
+                      .map((p) => ({
+                        key: p.name,
+                        value: productObject[p.name],
+                      })) || []
                   : []
               }
-              pickedUser={pickedProduct}
-              setIsPickedUser={setPickedProduct}
+              pickedOption={pickedProduct}
+              setIsPickedOption={setPickedProduct}
             />
           </>
         )}
 
         {pickedProduct && (
           <div>
-            <p
-              style={{
-                marginTop: "10px",
-              }}
-            >
+            <p className={cls.mt10}>
               Какое количество (max:{" "}
               {
                 fetchedProducts?.filter(
-                  (p) => p.storage_id === pickedStorage
+                  (p) =>
+                    p.name === pickedProduct?.key &&
+                    p.storage_id === pickedStorage?.key
                 )[0]?.count
               }
               )
@@ -96,9 +84,7 @@ export const SellModal = ({ closeModal, setAnswer }: TypeForModal) => {
 
             <Input
               type="number"
-              style={{
-                marginTop: "10px",
-              }}
+              className={cls.mt10}
               value={count}
               onChange={(e) => {
                 if (fetchedProducts)
@@ -106,7 +92,9 @@ export const SellModal = ({ closeModal, setAnswer }: TypeForModal) => {
                     Number(e.target.value) <=
                     Number(
                       fetchedProducts.filter(
-                        (p) => p.storage_id === pickedStorage
+                        (p) =>
+                          p.name === pickedProduct?.key &&
+                          p.storage_id === pickedStorage?.key
                       )[0]?.count
                     )
                   ) {
@@ -116,26 +104,20 @@ export const SellModal = ({ closeModal, setAnswer }: TypeForModal) => {
             />
           </div>
         )}
-        <div
-          style={{
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
+        <div className={cls.buttonWrapper}>
           <div>
             <ActiveButton
               onClick={() => {
                 if (!pickedProduct) return;
                 closeModal();
                 setAnswer({
-                  what: productObject[pickedProduct],
-                  action: `продать в ${pickedStorage} (${count})`,
+                  what: productObject[pickedProduct.key],
+                  action: `продать в ${pickedStorage?.value} (${count})`,
                   query: JSON.stringify({
                     action: "sell",
-                    product: pickedProduct,
+                    product: pickedProduct.key,
                     count,
-                    storage: pickedStorage,
+                    storage: pickedStorage?.key,
                   }),
                 });
               }}

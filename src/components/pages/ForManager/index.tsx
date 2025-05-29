@@ -3,10 +3,10 @@ import cls from "./styles.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useGlobalContext } from "../../Contexts/useGlobalContext";
 import { List } from "../../List";
-// import { Input } from "../../Input";
 import { ConstructorForTask } from "../../ConstructorForTask";
 import { ActiveButton } from "../../ActiveButton";
 import { backendApi } from "../../utils/backendApi";
+import { KeyValueType } from "../../ConstructorForTask/types/TypeForModal";
 
 export type AnswerType = {
   what: string | null;
@@ -17,7 +17,7 @@ export type AnswerType = {
 export const ForManagerPage = () => {
   const nav = useNavigate();
   const { currentUser, allUsers, setTasks } = useGlobalContext();
-  const [pickedUser, setIsPickedUser] = useState<string | null>(null);
+  const [pickedUser, setIsPickedUser] = useState<KeyValueType | null>(null);
 
   useEffect(() => {
     if (!currentUser?.isManager) {
@@ -40,7 +40,7 @@ export const ForManagerPage = () => {
           title: `Необходимо ${answer.action} ${answer.what}`,
           description: "",
           query: answer.query,
-          assigned_to: pickedUser,
+          assigned_to: pickedUser.key,
         });
 
         setTasks((prev) => {
@@ -74,9 +74,9 @@ export const ForManagerPage = () => {
         <div className={cls.column}>
           <p>Выберите пользователя</p>
           <List
-            pickedUser={pickedUser}
-            setIsPickedUser={setIsPickedUser}
-            allOptions={allUsers}
+            pickedOption={pickedUser}
+            setIsPickedOption={setIsPickedUser}
+            allOptions={allUsers.map((user) => ({ key: user, value: user }))}
           />
         </div>
         <div>

@@ -4,7 +4,6 @@ import { CustomInput } from "../../CustomInput";
 import cls from "./styles.module.scss";
 import { backendApi } from "../../utils/backendApi";
 import { useState } from "react";
-import { useGlobalContext } from "../../Contexts/useGlobalContext";
 import logo from "../../shared/images/istorage.png";
 
 export const Login = () => {
@@ -12,8 +11,6 @@ export const Login = () => {
   const [password, setPassword] = useState<string>("");
 
   const [disable, setDisable] = useState<boolean>(false);
-
-  const { setName } = useGlobalContext();
 
   const n = useNavigate();
 
@@ -27,7 +24,6 @@ export const Login = () => {
 
         if (data.access_token) {
           localStorage.setItem("token", data.access_token);
-          setName(login);
           n("/");
         }
       }

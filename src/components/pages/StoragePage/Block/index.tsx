@@ -132,7 +132,7 @@ export const Block = ({
       {isClicked && (
         <div className={s.modal} ref={ref}>
           <Cross onClick={closeModal} className={s.cross} />
-          <p className={s.text}>На этом складе есть</p>
+          <p className={s.text}>На этом стеллаже есть </p>
 
           <div className={s.options}>
             {storage.map((item) => {

@@ -4,8 +4,6 @@ import { MODALS } from "../ModalComponent/types";
 import { CurrentType } from "./GlobalContextProvider";
 
 export type GlobalContextType = {
-  name: string | null;
-  setName: React.Dispatch<React.SetStateAction<string | null>>;
   tasks: Task[] | null;
   setTasks: React.Dispatch<React.SetStateAction<Task[] | null>>;
   allUsers: string[] | null;
@@ -25,8 +23,6 @@ export type GlobalContextType = {
 };
 
 export const GlobalContext = createContext<GlobalContextType>({
-  name: null,
-  setName: () => {},
   tasks: null,
   setTasks: () => {},
   allUsers: null,

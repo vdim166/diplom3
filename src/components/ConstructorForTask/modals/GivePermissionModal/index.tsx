@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { List } from "../../List";
-import { Modal } from "../../Modal";
-import { TypeForModal } from "./SellModal";
-import cls from "./styles.module.scss";
-import { ActiveButton } from "../../ActiveButton";
-import { backendApi } from "../../utils/backendApi";
+import cls from "../styles.module.scss";
+import { KeyValueType, TypeForModal } from "../../types/TypeForModal";
+import { backendApi } from "../../../utils/backendApi";
+import { Modal } from "../../../Modal";
+import { ActiveButton } from "../../../ActiveButton";
+import { List } from "../../../List";
 
 export const GivePermissionModal = ({ closeModal }: TypeForModal) => {
-  const [pickedUser, setIsPickedUser] = useState<string | null>(null);
+  const [pickedUser, setIsPickedUser] = useState<KeyValueType | null>(null);
 
   const [workers, setWorkers] = useState<string[]>([]);
 
@@ -24,7 +24,7 @@ export const GivePermissionModal = ({ closeModal }: TypeForModal) => {
   const handleSubmit = async () => {
     if (!pickedUser) return;
 
-    await backendApi.givePermission(pickedUser);
+    await backendApi.givePermission(pickedUser.key);
 
     closeModal();
   };
@@ -37,9 +37,11 @@ export const GivePermissionModal = ({ closeModal }: TypeForModal) => {
 
         <p>Дать права кому?</p>
         <List
-          pickedUser={pickedUser}
-          setIsPickedUser={setIsPickedUser}
-          allOptions={workers || []}
+          pickedOption={pickedUser}
+          setIsPickedOption={setIsPickedUser}
+          allOptions={
+            workers.map((worker) => ({ key: worker, value: worker })) || []
+          }
         />
         <div>
           <ActiveButton onClick={handleSubmit}>Ok</ActiveButton>

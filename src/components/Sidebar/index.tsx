@@ -12,7 +12,6 @@ export const Sidebar = () => {
 
   const { currentUser } = useGlobalContext();
 
-  const { name } = useGlobalContext();
   return (
     <div className={cls.main}>
       <div className={cls.logoWrapper}>
@@ -51,7 +50,7 @@ export const Sidebar = () => {
       )}
 
       <div className={cls.userSection}>
-        <div className={cls.userName}>{name}</div>
+        <div className={cls.userName}>{currentUser?.username}</div>
         <div className={cls.option} onClick={handleLogout}>
           Выйти
         </div>
