@@ -12,6 +12,7 @@ import { Login } from "../pages/Login";
 import { Reg } from "../pages/Reg";
 import { ForManagerPage } from "../pages/ForManager";
 import { ProductsPage } from "../pages/Products";
+import { Workers } from "../pages/Workers";
 
 export const router = createBrowserRouter([
   {
@@ -72,6 +73,10 @@ export const router = createBrowserRouter([
           {
             path: "for/manager",
             element: <ForManagerPage />,
+          },
+          {
+            path: "workers",
+            element: <Workers />,
           },
         ],
       },

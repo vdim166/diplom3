@@ -42,6 +42,9 @@ export const Sidebar = () => {
       <Link to={"/storage/products"} className={cls.option}>
         Все продукты
       </Link>
+      <Link to={"/workers"} className={cls.option}>
+        Сотрудники
+      </Link>
 
       {currentUser?.isManager && (
         <Link to={"/for/manager"} className={cls.option}>

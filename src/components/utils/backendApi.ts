@@ -18,9 +18,12 @@ export type FetchedStorageItem = {
   expiration_date: string;
 };
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 class BackendApi {
-  private defaultUrl: string = "http://localhost:8000/api";
+  // private defaultUrl: string = "http://localhost:8000/api";
   // private defaultUrl: string = "/api";
+  private defaultUrl: string = `${BACKEND_URL}`;
 
   async checkToken(token: string) {
     const response = await fetch(`${this.defaultUrl}/validate-token`, {

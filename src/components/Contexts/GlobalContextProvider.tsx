@@ -13,7 +13,6 @@ export const GlobalContextProvider = ({
 }: {
   children: ReactNode;
 }) => {
-  const [name, setName] = useState<string | null>(null);
   const [tasks, setTasks] = useState<Task[] | null>(null);
   const [allUsers, setAllUsers] = useState<string[] | null>(null);
 
@@ -27,8 +26,6 @@ export const GlobalContextProvider = ({
   const [currentUser, setCurrentUser] = useState<CurrentType | null>(null);
 
   const state: GlobalContextType = {
-    name,
-    setName,
     tasks,
     setTasks,
     allUsers,

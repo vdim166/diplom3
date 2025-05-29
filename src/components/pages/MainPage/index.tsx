@@ -10,14 +10,14 @@ export const MainPage = () => {
   const month = now.toLocaleString("ru-RU", { month: "long" });
   const day = now.toLocaleString("ru-RU", { day: "numeric" });
 
-  const { name, tasks, allUsers } = useGlobalContext();
+  const { currentUser, tasks, allUsers } = useGlobalContext();
 
   return (
     <div className={cls.main}>
       <p className={cls.dayOfWeek}>
         {weekday[0].toUpperCase() + weekday.slice(1)}, {day} {month}
       </p>
-      <p className={cls.welcome}>Добрый день, {name}</p>
+      <p className={cls.welcome}>Добрый день, {currentUser?.username}</p>
       <div className={cls.line}>
         <p className={cls.done}>Закоченных задач:</p>
         {tasks === null ? (
