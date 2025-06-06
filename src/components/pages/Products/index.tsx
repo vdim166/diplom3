@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import cls from "./styles.module.scss";
 import { backendApi } from "../../utils/backendApi";
 import { productObject } from "../../utils/fetchProductDataApi";
+import { Rocket } from "../../shared/svgs/Rocket";
+import { useGlobalContext } from "../../Contexts/useGlobalContext";
+import { MODALS } from "../../ModalComponent/types";
 
 export const ProductsPage = () => {
   const [productState, setProductState] = useState<{
@@ -10,6 +13,8 @@ export const ProductsPage = () => {
       count: number;
     };
   }>({});
+
+  const { setCurrentOpenModal, setModalData } = useGlobalContext();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +43,11 @@ export const ProductsPage = () => {
     fetchData();
   }, []);
 
+  const handleChangeExpTime = (key: string) => () => {
+    setModalData({ key });
+    setCurrentOpenModal(MODALS.CHANGE_EXP_TIME);
+  };
+
   return (
     <div className={cls.main}>
       <div className={cls.options}>
@@ -57,6 +67,12 @@ export const ProductsPage = () => {
                 {item.storages
                   .map((s) => s.replace("storage_", "стеллаж "))
                   .join(", ")}
+              </div>
+              <div
+                className={cls.changeExpTime}
+                onClick={handleChangeExpTime(key)}
+              >
+                <Rocket />
               </div>
             </div>
           );

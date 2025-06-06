@@ -131,7 +131,10 @@ export const ConstructorForTask = ({
           <div className={cls.commands}>
             {Object.keys(commands).map((command) => {
               return (
-                <ActiveButton onClick={() => setPickedCommand(command)}>
+                <ActiveButton
+                  onClick={() => setPickedCommand(command)}
+                  key={command}
+                >
                   {command}
                 </ActiveButton>
               );

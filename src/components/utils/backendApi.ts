@@ -219,6 +219,23 @@ class BackendApi {
 
     return response;
   }
+
+  async changeExpTime(id: string, storage_id: string, expiration_date: string) {
+    const response = await fetch(
+      `${this.defaultUrl}/items/${storage_id}/${id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          expiration_date,
+        }),
+      }
+    );
+
+    return response;
+  }
 }
 
 export const backendApi = new BackendApi();

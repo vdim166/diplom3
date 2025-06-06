@@ -10,8 +10,17 @@
 
   font-size: 20px;
 
-  &:hover {
+  &:not(&:disabled):hover {
     cursor: pointer;
     transform: scale(1.05);
+  }
+
+  &:not(&:disabled):active {
+    background-color: rgb(35, 35, 172);
+    transform: scale(1.05);
+  }
+
+  &:disabled {
+    background-color: gray;
   }
 }
