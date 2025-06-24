@@ -22,12 +22,17 @@ export const GivePermissionModal = ({ closeModal }: TypeForModal) => {
   }, []);
 
   const handleSubmit = async () => {
-    if (!pickedUser) return;
+    try {
+      if (!pickedUser) return;
 
-    await backendApi.givePermission(pickedUser.key);
+      await backendApi.givePermission(pickedUser.key);
 
-    closeModal();
+      closeModal();
+    } catch (error) {
+      console.log("error", error);
+    }
   };
+
   return (
     <Modal>
       <div className={cls.modalMain}>

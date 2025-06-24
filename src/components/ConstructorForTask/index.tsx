@@ -7,6 +7,7 @@ import { AddProductModal } from "./modals/AddProduct";
 import { MoveModal } from "./modals/MoveModal";
 import { GivePermissionModal } from "./modals/GivePermissionModal";
 import { RemovePermissionModal } from "./modals/RemovePermissionModal";
+import { DeleteUserModal } from "./modals/DeleteUserModal";
 
 const commands: {
   [key: string]: { [key: string]: { text: string } };
@@ -19,6 +20,9 @@ const commands: {
   Админ: {
     give: { text: "Дать права" },
     remove: { text: "Удалить права" },
+  },
+  Пользователи: {
+    deleteUser: { text: "Удалить пользователя" },
   },
 };
 
@@ -47,6 +51,8 @@ const CustomModals = ({
     return (
       <RemovePermissionModal closeModal={closeModal} setAnswer={setAnswer} />
     );
+  } else if (modalTag === "deleteUser") {
+    return <DeleteUserModal closeModal={closeModal} setAnswer={setAnswer} />;
   }
 };
 

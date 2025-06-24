@@ -205,6 +205,20 @@ class BackendApi {
     return response;
   }
 
+  async deleteUser(username: string) {
+    const response = await fetch(`${this.defaultUrl}/user/delete/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username,
+      }),
+    });
+
+    return response;
+  }
+
   async removePermission(username: string) {
     const response = await fetch(`${this.defaultUrl}/user/update/`, {
       method: "POST",
